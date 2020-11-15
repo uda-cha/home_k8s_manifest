@@ -3,6 +3,10 @@ kind: Ingress
 metadata:
   name: squid-ingress
 spec:
-  backend:
-    serviceName: squid-service
-    servicePort: 8080
+  rules:
+    - host: squid.k8s.uda-cha.net
+      http:
+        paths:
+          - backend:
+              serviceName: squid-service
+              servicePort: 8080
