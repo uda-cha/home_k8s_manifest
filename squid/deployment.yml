@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: squid-deployment
+  labels:
+    app: squid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: squid
+  template:
+    metadata:
+      labels:
+        app: squid
+    spec:
+      containers:
+        - name: squid
+          image: asia.gcr.io/cloud-proxy-291510/cloud_proxy@sha256:7368805b87571f34d4e7e3fd9fad3a951104bc3d9d5eba6e7f9ba8f3d177e339
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: cloud-proxy-gcr
