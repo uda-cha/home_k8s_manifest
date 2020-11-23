@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: squid
-          image: asia.gcr.io/cloud-proxy-291510/cloud_proxy@sha256:d60bbc7d543c5528577d878cd9c2f554b92fe7663a32d7f4f1702cf520e49315
+          image: asia.gcr.io/serotoninpower-gcr/cloud_proxy@sha256:fcfa03f967af905c6bed0810c3338f5c08a34f54baf279081197efa7b09e6ef5
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: cloud-proxy-gcr
+        - name: serotoninpower-gcr
