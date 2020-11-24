@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-dns-deployment
+  labels:
+    app: home-dns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: home-dns
+  template:
+    metadata:
+      labels:
+        app: home-dns
+    spec:
+      containers:
+        - name: home-dns
+          image: asia.gcr.io/serotoninpower-gcr/home_dns@sha256:121c9d02b4b6eb2f0ba8221258342d4f46fc5574606c103a2a89c9e7b6d9f22f
+          ports:
+            - containerPort: 53
+              protocol: TCP
+            - containerPort: 53
+              protocol: UDP
+      imagePullSecrets:
+        - name: serotoninpower-gcr
