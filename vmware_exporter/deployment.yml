@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vmware-exporter-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vmware-exporter
+  template:
+    metadata:
+      labels:
+        app: vmware-exporter
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9272'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+        - name: vmware-exporter
+          image: pryorda/vmware_exporter:v0.13.2
+          ports:
+            - containerPort: 9272
+          env:
+            - name: VSPHERE_HOST
+              value: 192.168.100.104
+            - name: VSPHERE_IGNORE_SSL
+              value: "True"
+            - name: VSPHERE_SPECS_SIZE
+              value: "2000"
+            - name: VSPHERE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: vsphere-secret
+                  key: VSPHERE_USER
+            - name: VSPHERE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vsphere-secret
+                  key: VSPHERE_PASSWORD
