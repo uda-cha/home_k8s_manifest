@@ -2,14 +2,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-exporter
+  labels:
+    app.kubernetes.io/name: node-exporter
 spec:
   selector:
-      matchLabels:
-        name: node-exporter
+    matchLabels:
+      name: node-exporter
   template:
     metadata:
       labels:
         name: node-exporter
+        app.kubernetes.io/name: node-exporter
       annotations:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '9100'
