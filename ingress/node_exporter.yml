@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: node-exporter-ingress
+spec:
+  rules:
+  - host: node-exporter.k8s.uda-cha.net
+    http:
+      paths:
+      - backend:
+          serviceName: node-exporter-prometheus-service
+          servicePort: 9090

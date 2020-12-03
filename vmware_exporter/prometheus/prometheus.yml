@@ -7,6 +7,7 @@ metadata:
 spec:
   replicas: 2
   serviceAccountName: prometheus
+  externalUrl: http://vmware-exporter.k8s.uda-cha.net
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: vmware-exporter
