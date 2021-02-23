@@ -12,6 +12,9 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: node-exporter
+  ruleSelector:
+    matchLabels:
+      prometheus: node-exporter
   thanos:
     version: v0.18.0
     objectStorageConfig:

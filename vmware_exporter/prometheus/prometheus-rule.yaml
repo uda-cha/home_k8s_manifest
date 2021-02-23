@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: vmware-exporter
+  labels:
+    prometheus: vmware-exporter
+spec:
+  groups:
+  - name: HostOutOfMemory
+    rules:
+    - alert: HostOutOfMemory
+      expr: (vmware_host_memory_max - vmware_host_memory_usage) / vmware_host_memory_max * 100 < 10
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Host out of memory (instance {{ $labels.instance }})"
+        description: "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - name: HostHighCpuLoad
+    rules:
+    - alert: HostHighCpuLoad
+      expr: (vmware_host_cpu_usage{host_name=~"$host"} / vmware_host_cpu_max) * 100 > 90
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Host high CPU load (instance {{ $labels.instance }})"
+        description: "CPU load is > 90%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - name: HostOutOfDiskSpace
+    rules:
+    - alert: HostOutOfDiskSpace
+      expr: (vmware_datastore_capacity_size - vmware_datastore_freespace_size) / vmware_datastore_capacity_size * 100 < 10
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Host out of disk space (instance {{ $labels.instance }})"
+        description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
