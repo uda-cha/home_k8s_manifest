@@ -9,5 +9,8 @@ spec:
     port: 9090
     protocol: TCP
     targetPort: web
+  - name: grpc
+    port: 10901
+    protocol: TCP
   selector:
     prometheus: node-exporter

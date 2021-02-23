@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: thanos-query
+spec:
+  rules:
+  - host: thanos-query.k8s.uda-cha.net
+    http:
+      paths:
+      - backend:
+          serviceName: thanos-query-service
+          servicePort: 9090

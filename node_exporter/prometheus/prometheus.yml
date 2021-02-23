@@ -5,9 +5,15 @@ metadata:
   labels:
     prometheus: node-exporter
 spec:
+  version: v2.25.0
   replicas: 2
   serviceAccountName: prometheus
   externalUrl: http://node-exporter.k8s.uda-cha.net
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: node-exporter
+  thanos:
+    version: v0.18.0
+    objectStorageConfig:
+      name: thanos-secret
+      key: object-storeage-config.yml
