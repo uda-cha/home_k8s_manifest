@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  name: home-alertmanager
+  labels:
+    alertmanager: home-alertmanager
+spec:
+  replicas: 2
+  externalUrl: http://am.k8s.uda-cha.net
+  alertmanagerConfigSelector:
+    matchLabels:
+      alertmanager: home-alertmanager

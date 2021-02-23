@@ -12,6 +12,11 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: node-exporter
+  alerting:
+    alertmanagers:
+    - name: home-alertmanager-service
+      port: web
+      namespace: default
   ruleSelector:
     matchLabels:
       prometheus: node-exporter
