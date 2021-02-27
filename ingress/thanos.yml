@@ -10,3 +10,9 @@ spec:
       - backend:
           serviceName: thanos-query-service
           servicePort: 9090
+  - host: thanos-store.k8s.uda-cha.net
+    http:
+      paths:
+      - backend:
+          serviceName: thanos-store-service
+          servicePort: 10902
