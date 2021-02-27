@@ -10,6 +10,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: AlertmanagerConfig
     listKind: AlertmanagerConfigList
     plural: alertmanagerconfigs
@@ -49,6 +51,7 @@ spec:
                         properties:
                           name:
                             description: Label to match.
+                            minLength: 1
                             type: string
                           regex:
                             description: Whether to match on equality (false) or regular-expression (true).
@@ -58,7 +61,6 @@ spec:
                             type: string
                         required:
                         - name
-                        - value
                         type: object
                       type: array
                     targetMatch:
@@ -68,6 +70,7 @@ spec:
                         properties:
                           name:
                             description: Label to match.
+                            minLength: 1
                             type: string
                           regex:
                             description: Whether to match on equality (false) or regular-expression (true).
@@ -77,7 +80,6 @@ spec:
                             type: string
                         required:
                         - name
-                        - value
                         type: object
                       type: array
                   type: object
@@ -93,9 +95,10 @@ spec:
                         description: EmailConfig configures notifications via Email.
                         properties:
                           authIdentity:
+                            description: The identity to use for authentication.
                             type: string
                           authPassword:
-                            description: SecretKeySelector selects a key of a Secret.
+                            description: The secret's key that contains the password to use for authentication. The secret needs to be in the same namespace as the AlertmanagerConfig object and accessible by the Prometheus Operator.
                             properties:
                               key:
                                 description: The key of the secret to select from.  Must be a valid secret key.
@@ -110,7 +113,7 @@ spec:
                             - key
                             type: object
                           authSecret:
-                            description: SecretKeySelector selects a key of a Secret.
+                            description: The secret's key that contains the CRAM-MD5 secret. The secret needs to be in the same namespace as the AlertmanagerConfig object and accessible by the Prometheus Operator.
                             properties:
                               key:
                                 description: The key of the secret to select from.  Must be a valid secret key.
@@ -125,7 +128,7 @@ spec:
                             - key
                             type: object
                           authUsername:
-                            description: SMTP authentication information.
+                            description: The username to use for authentication.
                             type: string
                           from:
                             description: The sender address.
@@ -137,6 +140,7 @@ spec:
                               properties:
                                 key:
                                   description: Key of the tuple.
+                                  minLength: 1
                                   type: string
                                 value:
                                   description: Value of the tuple.
@@ -264,6 +268,7 @@ spec:
                       type: array
                     name:
                       description: Name of the receiver. Must be unique across all items from the list.
+                      minLength: 1
                       type: string
                     opsgenieConfigs:
                       description: List of OpsGenie configurations.
@@ -298,6 +303,7 @@ spec:
                               properties:
                                 key:
                                   description: Key of the tuple.
+                                  minLength: 1
                                   type: string
                                 value:
                                   description: Value of the tuple.
@@ -468,7 +474,7 @@ spec:
                           responders:
                             description: List of responders responsible for notifications.
                             items:
-                              description: OpsGenieConfigResponder defines a responder to an incident. One of id, name or username has to be defined.
+                              description: OpsGenieConfigResponder defines a responder to an incident. One of `id`, `name` or `username` has to be defined.
                               properties:
                                 id:
                                   description: ID of the responder.
@@ -478,10 +484,13 @@ spec:
                                   type: string
                                 type:
                                   description: Type of responder.
+                                  minLength: 1
                                   type: string
                                 username:
                                   description: Username of the responder.
                                   type: string
+                              required:
+                              - type
                               type: object
                             type: array
                           sendResolved:
@@ -522,6 +531,7 @@ spec:
                               properties:
                                 key:
                                   description: Key of the tuple.
+                                  minLength: 1
                                   type: string
                                 value:
                                   description: Value of the tuple.
@@ -903,7 +913,7 @@ spec:
                             description: Notification title.
                             type: string
                           token:
-                            description: Your registered application’s API token, see https://pushover.net/apps
+                            description: The secret's key that contains the registered application’s API token, see https://pushover.net/apps. The secret needs to be in the same namespace as the AlertmanagerConfig object and accessible by the Prometheus Operator.
                             properties:
                               key:
                                 description: The key of the secret to select from.  Must be a valid secret key.
@@ -924,7 +934,7 @@ spec:
                             description: A title for supplementary URL, otherwise just the URL is shown
                             type: string
                           userKey:
-                            description: The recipient user’s user key.
+                            description: The secret's key that contains the recipient user’s user key. The secret needs to be in the same namespace as the AlertmanagerConfig object and accessible by the Prometheus Operator.
                             properties:
                               key:
                                 description: The key of the secret to select from.  Must be a valid secret key.
@@ -958,6 +968,7 @@ spec:
                                     okText:
                                       type: string
                                     text:
+                                      minLength: 1
                                       type: string
                                     title:
                                       type: string
@@ -969,8 +980,10 @@ spec:
                                 style:
                                   type: string
                                 text:
+                                  minLength: 1
                                   type: string
                                 type:
+                                  minLength: 1
                                   type: string
                                 url:
                                   type: string
@@ -1013,8 +1026,10 @@ spec:
                                 short:
                                   type: boolean
                                 title:
+                                  minLength: 1
                                   type: string
                                 value:
+                                  minLength: 1
                                   type: string
                               required:
                               - title
@@ -1209,7 +1224,7 @@ spec:
                         description: VictorOpsConfig configures notifications via VictorOps. See https://prometheus.io/docs/alerting/latest/configuration/#victorops_config
                         properties:
                           apiKey:
-                            description: The API key to use when talking to the VictorOps API.
+                            description: The secret's key that contains the API key to use when talking to the VictorOps API. The secret needs to be in the same namespace as the AlertmanagerConfig object and accessible by the Prometheus Operator.
                             properties:
                               key:
                                 description: The key of the secret to select from.  Must be a valid secret key.
@@ -1233,6 +1248,7 @@ spec:
                               properties:
                                 key:
                                   description: Key of the tuple.
+                                  minLength: 1
                                   type: string
                                 value:
                                   description: Value of the tuple.
@@ -1409,8 +1425,6 @@ spec:
                           stateMessage:
                             description: Contains long explanation of the alerted problem.
                             type: string
-                        required:
-                        - routingKey
                         type: object
                       type: array
                     webhookConfigs:
@@ -1568,8 +1582,9 @@ spec:
                                 type: object
                             type: object
                           maxAlerts:
-                            description: Maximum number of alerts to be sent per webhook message.
+                            description: Maximum number of alerts to be sent per webhook message. When 0, all alerts are included.
                             format: int32
+                            minimum: 0
                             type: integer
                           sendResolved:
                             description: Whether or not to notify about resolved alerts.
@@ -1792,7 +1807,7 @@ spec:
                   type: object
                 type: array
               route:
-                description: The Alertmanager route definition for alerts matching the resource’s namespace. It will be added to the generated Alertmanager configuration as a first-level route.
+                description: The Alertmanager route definition for alerts matching the resource’s namespace. If present, it will be added to the generated Alertmanager configuration as a first-level route.
                 properties:
                   continue:
                     description: Boolean indicating whether an alert should continue matching subsequent sibling nodes. It will always be overridden to true for the first-level route by the Prometheus operator.
@@ -1815,6 +1830,7 @@ spec:
                       properties:
                         name:
                           description: Label to match.
+                          minLength: 1
                           type: string
                         regex:
                           description: Whether to match on equality (false) or regular-expression (true).
@@ -1824,11 +1840,10 @@ spec:
                           type: string
                       required:
                       - name
-                      - value
                       type: object
                     type: array
                   receiver:
-                    description: Name of the receiver for this route. If present, it should be listed in the `receivers` field. The field can be omitted only for nested routes otherwise it is mandatory.
+                    description: Name of the receiver for this route. If not empty, it should be listed in the `receivers` field.
                     type: string
                   repeatInterval:
                     description: How long to wait before repeating the last notification. Must match the regular expression `[0-9]+(ms|s|m|h)` (milliseconds seconds minutes hours).
@@ -1864,6 +1879,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: Alertmanager
     listKind: AlertmanagerList
     plural: alertmanagers
@@ -5080,6 +5097,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: PodMonitor
     listKind: PodMonitorList
     plural: podmonitors
@@ -5436,6 +5455,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: Probe
     listKind: ProbeList
     plural: probes
@@ -5573,6 +5594,37 @@ spec:
                           type: string
                         description: Labels assigned to all metrics scraped from the targets.
                         type: object
+                      relabelingConfigs:
+                        description: 'RelabelConfigs to apply to samples before ingestion. More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#relabel_config'
+                        items:
+                          description: 'RelabelConfig allows dynamic rewriting of the label set, being applied to samples before ingestion. It defines `<metric_relabel_configs>`-section of Prometheus configuration. More info: https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs'
+                          properties:
+                            action:
+                              description: Action to perform based on regex matching. Default is 'replace'
+                              type: string
+                            modulus:
+                              description: Modulus to take of the hash of the source label values.
+                              format: int64
+                              type: integer
+                            regex:
+                              description: Regular expression against which the extracted value is matched. Default is '(.*)'
+                              type: string
+                            replacement:
+                              description: Replacement value against which a regex replace is performed if the regular expression matches. Regex capture groups are available. Default is '$1'
+                              type: string
+                            separator:
+                              description: Separator placed between concatenated source label values. default is ';'.
+                              type: string
+                            sourceLabels:
+                              description: The source labels select values from existing labels. Their content is concatenated using the configured separator and matched against the configured regular expression for the replace, keep, and drop actions.
+                              items:
+                                type: string
+                              type: array
+                            targetLabel:
+                              description: Label to which the resulting value is written in a replace action. It is mandatory for replace actions. Regex capture groups are available.
+                              type: string
+                          type: object
+                        type: array
                       static:
                         description: Targets is a list of URLs to probe using the configured prober.
                         items:
@@ -5605,6 +5657,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: Prometheus
     listKind: PrometheusList
     plural: prometheuses
@@ -7852,7 +7906,7 @@ spec:
                     type: string
                 type: object
               podMonitorNamespaceSelector:
-                description: Namespaces to be selected for PodMonitor discovery. If nil, only check own namespace.
+                description: Namespace's labels to match for PodMonitor discovery. If nil, only check own namespace.
                 properties:
                   matchExpressions:
                     description: matchExpressions is a list of label selector requirements. The requirements are ANDed.
@@ -8233,6 +8287,11 @@ spec:
                     bearerTokenFile:
                       description: File to read bearer token for remote write.
                       type: string
+                    headers:
+                      additionalProperties:
+                        type: string
+                      description: Custom HTTP headers to be sent along with each remote write request. Be aware that headers that are set by Prometheus itself can't be overwritten. Only valid in Prometheus versions 2.25.0 and newer.
+                      type: object
                     name:
                       description: The name of the remote write queue, must be unique if specified. The name is used in metrics and logging in order to differentiate queues. Only valid in Prometheus versions 2.15.0 and newer.
                       type: string
@@ -8443,7 +8502,7 @@ spec:
                 description: Time duration Prometheus shall retain data for. Default is '24h', and must match the regular expression `[0-9]+(ms|s|m|h|d|w|y)` (milliseconds seconds minutes hours days weeks years).
                 type: string
               retentionSize:
-                description: Maximum amount of disk space used by blocks.
+                description: 'Maximum amount of disk space used by blocks. Supported units: B, KB, MB, GB, TB, PB, EB. Ex: `512MB`.'
                 type: string
               routePrefix:
                 description: The route prefix Prometheus registers HTTP handlers for. This is useful, if using ExternalURL and a proxy is rewriting HTTP routes of a request, and the actual ExternalURL is still true, but the server serves requests under a different route prefix. For example for use with `kubectl proxy`.
@@ -8613,7 +8672,7 @@ spec:
                 description: ServiceAccountName is the name of the ServiceAccount to use to run the Prometheus Pods.
                 type: string
               serviceMonitorNamespaceSelector:
-                description: Namespaces to be selected for ServiceMonitor discovery. If nil, only check own namespace.
+                description: Namespace's labels to match for ServiceMonitor discovery. If nil, only check own namespace.
                 properties:
                   matchExpressions:
                     description: matchExpressions is a list of label selector requirements. The requirements are ANDed.
@@ -9050,6 +9109,9 @@ spec:
                     required:
                     - key
                     type: object
+                  tracingConfigFile:
+                    description: TracingConfig specifies the path of the tracing configuration file. When used alongside with TracingConfig, TracingConfigFile takes precedence.
+                    type: string
                   version:
                     description: Version describes the version of Thanos to use.
                     type: string
@@ -10117,6 +10179,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: ServiceMonitor
     listKind: ServiceMonitorList
     plural: servicemonitors
@@ -10490,6 +10554,8 @@ metadata:
 spec:
   group: monitoring.coreos.com
   names:
+    categories:
+    - prometheus-operator
     kind: ThanosRuler
     listKind: ThanosRulerList
     plural: thanosrulers
@@ -13824,7 +13890,7 @@ metadata:
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/version: v0.44.0
+    app.kubernetes.io/version: 0.46.0
   name: prometheus-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -13841,7 +13907,7 @@ metadata:
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/version: v0.44.0
+    app.kubernetes.io/version: 0.46.0
   name: prometheus-operator
 rules:
 - apiGroups:
@@ -13921,7 +13987,7 @@ metadata:
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/version: v0.44.0
+    app.kubernetes.io/version: 0.46.0
   name: prometheus-operator
   namespace: default
 spec:
@@ -13935,13 +14001,13 @@ spec:
       labels:
         app.kubernetes.io/component: controller
         app.kubernetes.io/name: prometheus-operator
-        app.kubernetes.io/version: v0.44.0
+        app.kubernetes.io/version: 0.46.0
     spec:
       containers:
       - args:
         - --kubelet-service=kube-system/kubelet
-        - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.44.0
-        image: quay.io/prometheus-operator/prometheus-operator:v0.44.0
+        - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.46.0
+        image: quay.io/prometheus-operator/prometheus-operator:v0.46.0
         name: prometheus-operator
         ports:
         - containerPort: 8080
@@ -13956,7 +14022,7 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
       nodeSelector:
-        beta.kubernetes.io/os: linux
+        kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
@@ -13968,7 +14034,7 @@ metadata:
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/version: v0.44.0
+    app.kubernetes.io/version: 0.46.0
   name: prometheus-operator
   namespace: default
 ---
@@ -13978,7 +14044,7 @@ metadata:
   labels:
     app.kubernetes.io/component: controller
     app.kubernetes.io/name: prometheus-operator
-    app.kubernetes.io/version: v0.44.0
+    app.kubernetes.io/version: 0.46.0
   name: prometheus-operator
   namespace: default
 spec:
