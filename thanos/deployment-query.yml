@@ -21,6 +21,7 @@ spec:
         - query
         - --grpc-address=0.0.0.0:10901
         - --http-address=0.0.0.0:9090
+        - --query.replica-label=prometheus_replica
         - --store=dnssrv+_grpc._tcp.thanos-store-service.default.svc.cluster.local
         - --store=dnssrv+_grpc._tcp.vmware-exporter-prometheus-service.default.svc.cluster.local
         - --store=dnssrv+_grpc._tcp.node-exporter-prometheus-service.default.svc.cluster.local
