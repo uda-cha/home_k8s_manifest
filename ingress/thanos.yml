@@ -16,3 +16,9 @@ spec:
       - backend:
           serviceName: thanos-store-service
           servicePort: 10902
+  - host: thanos-compactor.k8s.uda-cha.net
+    http:
+      paths:
+      - backend:
+          serviceName: thanos-compactor-service
+          servicePort: 10902

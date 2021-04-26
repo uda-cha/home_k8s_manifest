@@ -11,6 +11,7 @@ spec:
   externalUrl: http://node-exporter.k8s.uda-cha.net
   scrapeInterval: 3m
   evaluationInterval: 3m
+  disableCompaction: true
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: node-exporter
@@ -24,6 +25,6 @@ spec:
       prometheus: node-exporter
   thanos:
     version: v0.18.0
-#    objectStorageConfig:
-#      name: thanos-secret
-#      key: object-storeage-config.yml
+    objectStorageConfig:
+      name: thanos-secret
+      key: object-storeage-config.yml

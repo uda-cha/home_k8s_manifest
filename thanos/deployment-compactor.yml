@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-compactor-deployment
+  labels:
+    app: thanos-compactor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thanos-compactor
+  template:
+    metadata:
+      labels:
+        app: thanos-compactor
+    spec:
+      containers:
+      - name: thanos-compactor
+        image: quay.io/thanos/thanos:v0.18.0
+        args:
+        - compact
+        - --http-address=0.0.0.0:10902
+        - --wait
+        - --objstore.config-file=/config/object-storeage-config.yml
+        ports:
+        - name: http
+          containerPort: 10902
+        livenessProbe:
+          httpGet:
+            port: 10902
+            path: /-/healthy
+        readinessProbe:
+          httpGet:
+            port: 10902
+            path: /-/ready
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        secret:
+          secretName: thanos-secret
+          items:
+          - key: object-storeage-config.yml
+            path: object-storeage-config.yml
