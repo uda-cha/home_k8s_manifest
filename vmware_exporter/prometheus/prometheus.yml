@@ -9,6 +9,8 @@ spec:
   replicas: 2
   serviceAccountName: prometheus
   externalUrl: http://vmware-exporter.k8s.uda-cha.net
+  scrapeInterval: 3m
+  evaluationInterval: 3m
   serviceMonitorSelector:
     matchLabels:
       app.kubernetes.io/name: vmware-exporter
