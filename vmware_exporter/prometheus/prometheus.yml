@@ -20,8 +20,8 @@ spec:
   ruleSelector:
     matchLabels:
       prometheus: vmware-exporter
-#  thanos:
-#    version: v0.18.0
+  thanos:
+    version: v0.18.0
 #    objectStorageConfig:
 #      name: thanos-secret
 #      key: object-storeage-config.yml
