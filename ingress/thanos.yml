@@ -4,19 +4,19 @@ metadata:
   name: thanos-query
 spec:
   rules:
-  - host: thanos-query.k8s.uda-cha.net
+  - host: thanos-query.k8s.uda-cha.me
     http:
       paths:
       - backend:
           serviceName: thanos-query-service
           servicePort: 9090
-  - host: thanos-store.k8s.uda-cha.net
+  - host: thanos-store.k8s.uda-cha.me
     http:
       paths:
       - backend:
           serviceName: thanos-store-service
           servicePort: 10902
-  - host: thanos-compactor.k8s.uda-cha.net
+  - host: thanos-compactor.k8s.uda-cha.me
     http:
       paths:
       - backend:

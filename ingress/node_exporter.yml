@@ -4,7 +4,7 @@ metadata:
   name: node-exporter-ingress
 spec:
   rules:
-  - host: node-exporter.k8s.uda-cha.net
+  - host: node-exporter.k8s.uda-cha.me
     http:
       paths:
       - backend:

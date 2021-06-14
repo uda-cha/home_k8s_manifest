@@ -8,7 +8,7 @@ spec:
   version: v2.25.0
   replicas: 2
   serviceAccountName: prometheus
-  externalUrl: http://node-exporter.k8s.uda-cha.net
+  externalUrl: http://node-exporter.k8s.uda-cha.me
   scrapeInterval: 3m
   evaluationInterval: 3m
   disableCompaction: true

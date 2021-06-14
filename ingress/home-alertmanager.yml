@@ -4,7 +4,7 @@ metadata:
   name: home-alertmanager-ingress
 spec:
   rules:
-  - host: am.k8s.uda-cha.net
+  - host: am.k8s.uda-cha.me
     http:
       paths:
       - backend:

@@ -4,7 +4,7 @@ metadata:
   name: squid-ingress
 spec:
   rules:
-    - host: squid.k8s.uda-cha.net
+    - host: squid.k8s.uda-cha.me
       http:
         paths:
           - backend:
