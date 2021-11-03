@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: squid-ingress
@@ -7,6 +7,9 @@ spec:
     - host: squid.k8s.uda-cha.me
       http:
         paths:
-          - backend:
-              serviceName: squid-service
-              servicePort: 8080
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: squid-service
+                port:
+                 number: 8080
