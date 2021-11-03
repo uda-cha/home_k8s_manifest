@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: vmware-exporter
-          image: pryorda/vmware_exporter:v0.13.2
+          image: pryorda/vmware_exporter:v0.18.2
           ports:
             - containerPort: 9272
           env:
@@ -27,7 +27,7 @@ spec:
             - name: VSPHERE_IGNORE_SSL
               value: "True"
             - name: VSPHERE_SPECS_SIZE
-              value: "2000"
+              value: "5000"
             - name: VSPHERE_USER
               valueFrom:
                 secretKeyRef:
